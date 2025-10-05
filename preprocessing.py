@@ -7,9 +7,25 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 from pathlib import Path
 
+#constant parameters for preprocessing
 IMG_SIZE = (224,224)
 BATCH_SIZE = 32
 DATASET_SPLIT = 0.2
+
+#Displays a batch of images for sanity sake
+def show_batch(dataset, img_num=9):
+    plt.figure(figsize=(9, 9))
+    for batch in dataset.take(1):  # take one batch
+        if isinstance(batch, tuple):  # labeled dataset
+            x, y = batch
+        else:  # unlabeled dataset
+            x = batch
+
+        for i in range(min(img_num, x.shape[0])):  # avoid index errors
+            ax = plt.subplot(3, 3, i + 1)
+            plt.imshow(x[i].numpy())  # keep float 0-1
+            plt.axis("off")
+    plt.show()
 
 # Organizes all image data to be consistent across the whole dataset. Required to feed consistent data into the model
 def preprocess():
@@ -61,13 +77,24 @@ def preprocess():
     # unlabelled normalization
     test_ds = test_ds.map(lambda x: x / 255.0)
 
-    
+    #visualizing data
+    #showing batches from each ds
+    print('training ds:')
+    show_batch(train_ds)
+
+    #showing batches from each ds
+    print('val ds:')
+    show_batch(val_ds)
+
+    #showing batches from each ds
+    print('test ds:')
+    show_batch(test_ds)
     
 
     print("done preprocessing!") # Finished the preprocessing step!
 
-def show_batch():
-    pass
+
+        
 
 #used for debugging/sanity checks
 def open_img(folder_path, img_index, folder_label):
@@ -78,5 +105,7 @@ def open_img(folder_path, img_index, folder_label):
     img.show()
 
 preprocess() # run the image preprocessing!
+
+
 
 
