@@ -11,6 +11,9 @@ from pathlib import Path
 IMG_SIZE = (224,224)
 BATCH_SIZE = 32
 DATASET_SPLIT = 0.2
+train_ds = None
+test_ds = None
+val_ds = None
 
 #Displays a batch of images for sanity sake
 def show_batch(dataset, img_num=9):
@@ -79,19 +82,19 @@ def preprocess():
 
     #visualizing data
     #showing batches from each ds
-    print('training ds:')
-    show_batch(train_ds)
+    #print('training ds:')
+    #show_batch(train_ds)
 
     #showing batches from each ds
-    print('val ds:')
-    show_batch(val_ds)
+    #print('val ds:')
+    #show_batch(val_ds)
 
     #showing batches from each ds
-    print('test ds:')
-    show_batch(test_ds)
-    
+    #print('test ds:')
+    #show_batch(test_ds)
 
     print("done preprocessing!") # Finished the preprocessing step!
+    return train_ds, val_ds, test_ds
 
 
         
